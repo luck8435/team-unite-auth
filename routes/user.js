@@ -31,9 +31,7 @@ router.post('/login', async (req, res) => {
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) return res.status(401).send({ message: 'Invalid Email or Password' });
         const token = user.generateAuthToken();
-        res.status(200).send({ data: token, message: 'Logged in succesfully' });
-        await new User({ ...req.body, password: hashPassword }).save();
-        return res.status(201).send({ message: 'User created successfully' });
+        return res.status(200).send({ data: token, message: 'Logged in succesfully' });
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: 'Internal server error' });
